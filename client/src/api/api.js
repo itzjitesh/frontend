@@ -19,10 +19,10 @@ API.interceptors.request.use((config) => {
 
 // Auth
 export async function login(email, password) {
-  return API.post("/api/auth/login", { email, password });
+  return API.post("/auth/login", { email, password });
 }
 export async function signup(email, password) {
-  return API.post("/api/auth/signup", { email, password });
+  return API.post("/auth/signup", { email, password });
 }
 
 // Calculators
