@@ -43,12 +43,15 @@ export async function listScenarios() {
 //   return API.post("/stripe/create-checkout-session", body);
 // }
 
+// export const createCheckoutSession = (data) =>
+//   axios.post("/stripe/create-checkout-session", data, {
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//   });
+
 export const createCheckoutSession = (data) =>
-  axios.post("/api/stripe/create-checkout-session", data, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  API.post("/stripe/create-checkout-session", data);
 
 // Helpers
 
