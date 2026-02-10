@@ -1,8 +1,11 @@
 export default function Footer() {
   return (
-    <footer className="border-t bg-white">
-      <div className="container mx-auto px-4 py-4 text-center text-sm text-gray-500">
-        © {new Date().getFullYear()} ValueLens. All rights reserved.
+    <footer className="footer-main shadow-inset bg-[#28313B]">
+      <div className="page-center">
+        <div className="ftr-cont text-white flex justify-between items-center">
+          <span>© {new Date().getFullYear()} ValueLens</span>{" "}
+          <span>Campaign ROI & Business Value Calculators</span>
+        </div>
       </div>
     </footer>
   );

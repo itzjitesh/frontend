@@ -1,6 +1,6 @@
 import React from "react";
-import TextType from "../Sections/text";
-import Carousel from "../Sections/carousel_cards";
+import TextType from "../components/Sections/text";
+import Carousel from "../components/Sections/carousel_cards";
 
 function Banner() {
   return (

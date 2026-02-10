@@ -1,36 +1,101 @@
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-export default function Header() {
-  const nav = useNavigate();
-  const user = JSON.parse(localStorage.getItem("vl_user") || null);
+function Header() {
+  const navigate = useNavigate();
+
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("vl_user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
   function logout() {
     localStorage.removeItem("vl_token");
-    localStorage.removteItem("vl_user");
-    nav("/login");
+    localStorage.removeItem("vl_user");
+    setUser(null);
+    navigate("/login");
   }
-  return (
-    <header className="bg-white border-b">
-      <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div
-          className="text-xl font-extrabold text-blue-600 cursor-pointer"
-          onClick={() => nav("/dashboard")}
-        >
-          ValueLens
-        </div>
 
-        {user && (
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-gray-600">{user.email}</span>
-            <button
-              onClick={logout}
-              className="text-sm font-medium text-red-600 hover:underline"
+  return (
+    <header className="head-wrap bg-[#28313B]">
+      <div className="page-center">
+        <div className="cont1 flex items-center gap-10">
+          <div className="logo-section w-auto">
+            <Link
+              to="/dashboard"
+              className="text-[#00c7ff] text-2xl font-[500]"
             >
-              Logout
-            </button>
+              ValueLens
+            </Link>
           </div>
-        )}
+
+          <div className="nav-items flex items-center justify-between w-full">
+            <div className="nav-left flex gap-6">
+              <Link to="dashboard" className="text-white">
+                Dashboard
+              </Link>
+
+              <Link to="/calculators" className="text-white">
+                Calculators
+              </Link>
+
+              <Link to="/scenarios" className="text-white">
+                Saved
+              </Link>
+            </div>
+
+            <div className="nav-right flex gap-4 items-center">
+              {user ? (
+                <span className="text-[#00c7ff] font-medium">
+                  {user.username || user.email}
+                </span>
+              ) : (
+                <Link to="#" className="text-white">
+                  Free
+                </Link>
+              )}
+
+              {user ? (
+                <Link
+                  to="/"
+                  onClick={logout}
+                  className="btn flex items-center gap-2 hover:text-white"
+                >
+                  <span>Logout</span>
+                  <svg fill="none" viewBox="0 0 24 24" className="arrow">
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      d="M5 12h14M13 6l6 6-6 6"
+                    />
+                  </svg>
+                </Link>
+              ) : (
+                <Link to="/login" className="btn text-white">
+                  <span>Login</span>
+                  <svg fill="none" viewBox="0 0 24 24" className="arrow">
+                    <path
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      strokeWidth="2"
+                      stroke="currentColor"
+                      d="M5 12h14M13 6l6 6-6 6"
+                    />
+                  </svg>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </header>
   );
 }
+
+export default Header;

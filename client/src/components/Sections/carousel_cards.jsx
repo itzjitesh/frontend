@@ -1,48 +1,61 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
+import { motion, useMotionValue, useTransform } from "motion/react";
 
-import { motion, useMotionValue, useTransform } from 'motion/react';
-// replace icons with your own if needed
-import { FiCircle, FiCode, FiFileText, FiLayers, FiLayout } from 'react-icons/fi';
+import {
+  FiCircle,
+  FiCode,
+  FiFileText,
+  FiLayers,
+  FiLayout,
+} from "react-icons/fi";
+
 const DEFAULT_ITEMS = [
   {
-    title: 'Campaign ROI',
-    description: 'Estimate ROI, CPA and revenue.',
+    title: "Campaign ROI",
+    description: "Estimate ROI, CPA and revenue.",
     id: 1,
-    icon: <FiFileText className="h-[16px] w-[16px] text-white" />
+    icon: <FiFileText className="h-[16px] w-[16px] text-white" />,
+    openlink: "calculators/campaign-roi",
+    previewlink: "calculators/campaign-roi",
   },
   {
-    title: 'CPA Calculator',
-    description: 'Quick CPA Calculation.',
+    title: "CPA Calculator",
+    description: "Quick CPA Calculation.",
     id: 2,
-    icon: <FiCircle className="h-[16px] w-[16px] text-white" />
+    icon: <FiCircle className="h-[16px] w-[16px] text-white" />,
+    openlink: "calculators/cpa",
+    previewlink: "calculators/cpa",
   },
   {
-    title: 'Saved Scenarios',
-    description: 'View and manage saved scenarios.',
+    title: "Saved Scenarios",
+    description: "View and manage saved scenarios.",
     id: 3,
-    icon: <FiLayers className="h-[16px] w-[16px] text-white" />
+    icon: <FiLayers className="h-[16px] w-[16px] text-white" />,
+    openlink: "/scenarios",
+    previewlink: "/scenarios",
   },
-  {
-    title: 'Backgrounds',
-    description: 'Beautiful backgrounds and patterns for your projects.',
-    id: 4,
-    icon: <FiLayout className="h-[16px] w-[16px] text-white" />
-  },
-  {
-    title: 'Common UI',
-    description: 'Common UI components are coming soon!',
-    id: 5,
-    icon: <FiCode className="h-[16px] w-[16px] text-white" />
-  }
 ];
 
 const DRAG_BUFFER = 0;
 const VELOCITY_THRESHOLD = 500;
 const GAP = 16;
-const SPRING_OPTIONS = { type: 'spring', stiffness: 300, damping: 30 };
+const SPRING_OPTIONS = { type: "spring", stiffness: 300, damping: 30 };
 
-function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, transition }) {
-  const range = [-(index + 1) * trackItemOffset, -index * trackItemOffset, -(index - 1) * trackItemOffset];
+function CarouselItem({
+  item,
+  index,
+  itemWidth,
+  round,
+  trackItemOffset,
+  x,
+  transition,
+}) {
+  const range = [
+    -(index + 1) * trackItemOffset,
+    -index * trackItemOffset,
+    -(index - 1) * trackItemOffset,
+  ];
   const outputRange = [90, 0, -90];
   const rotateY = useTransform(x, range, outputRange, { clamp: false });
 
@@ -51,18 +64,18 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
       key={`${item?.id ?? index}-${index}`}
       className={`relative shrink-0 flex flex-col ${
         round
-          ? 'items-center justify-center text-center bg-[#060010] border-0'
-          : 'items-start justify-between bg-[#222] border border-[#fff] rounded-[12px]'
+          ? "items-center justify-center text-center bg-[#060010] border-0"
+          : "items-start justify-between bg-[#222] border border-[#fff] rounded-[12px]"
       } overflow-hidden cursor-grab active:cursor-grabbing`}
       style={{
         width: itemWidth,
-        height: round ? itemWidth : '100%',
+        height: round ? itemWidth : "100%",
         rotateY: rotateY,
-        ...(round && { borderRadius: '50%' })
+        ...(round && { borderRadius: "50%" }),
       }}
       transition={transition}
     >
-      <div className={`${round ? 'p-0 m-0' : 'mb-4 p-5'}`}>
+      <div className={`${round ? "p-0 m-0" : "mb-4 p-5"}`}>
         <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#060010]">
           {item.icon}
         </span>
@@ -75,18 +88,16 @@ function CarouselItem({ item, index, itemWidth, round, trackItemOffset, x, trans
         <button class=" btn crd-btn2">Preview</button>
         </div> */}
         <div class="flex flex-col bg-[#193f80] w-64 p-2 rounded-3xl gap-1 mt-5">
-  <button
-    class="bg-[#225bc3] hover:bg-[#2564da] hover:scale-[1.065] hover:translate-y-[-7px] hover:rounded-[23px] hover:rounded-bl-none hover:rounded-br-none px-6 py-2 rounded-2xl rounded-bl-lg rounded-br-lg transition-all text-center text-[#d8e5f9] hover:text-[#a8c1f0] font-medium cursor-pointer"
-    >Open
-  </button>
-  <button
-    class="bg-[#5350c6] hover:bg-secondary-600 hover:scale-[1.065] hover:translate-y-[7px] hover:rounded-[23px] hover:rounded-tl-none hover:rounded-tr-none px-6 py-2 rounded-2xl rounded-tl-lg rounded-tr-lg transition-all text-center text-[#d8e5f9] hover:text-[#b3aaee] font-medium cursor-pointer"
-  >
-    Preview
-  </button>
-</div>
-
-
+          <Link
+            to={item.openlink}
+            class="bg-[#225bc3] hover:bg-[#2564da] hover:scale-[1.065] hover:translate-y-[-7px] hover:rounded-[23px] hover:rounded-bl-none hover:rounded-br-none px-6 py-2 rounded-2xl rounded-bl-lg rounded-br-lg transition-all text-center text-[#d8e5f9] hover:text-[#a8c1f0] font-medium cursor-pointer"
+          >
+            Open
+          </Link>
+          <Link class="bg-[#5350c6] hover:bg-secondary-600 hover:scale-[1.065] hover:translate-y-[7px] hover:rounded-[23px] hover:rounded-tl-none hover:rounded-tr-none px-6 py-2 rounded-2xl rounded-tl-lg rounded-tr-lg transition-all text-center text-[#d8e5f9] hover:text-[#b3aaee] font-medium cursor-pointer">
+            Preview
+          </Link>
+        </div>
       </div>
     </motion.div>
   );
@@ -100,7 +111,6 @@ export default function Carousel({
   pauseOnHover = false,
   loop = false,
   round = false,
-  
 }) {
   const containerPadding = 16;
   const itemWidth = baseWidth - containerPadding * 2;
@@ -123,11 +133,11 @@ export default function Carousel({
       const container = containerRef.current;
       const handleMouseEnter = () => setIsHovered(true);
       const handleMouseLeave = () => setIsHovered(false);
-      container.addEventListener('mouseenter', handleMouseEnter);
-      container.addEventListener('mouseleave', handleMouseLeave);
+      container.addEventListener("mouseenter", handleMouseEnter);
+      container.addEventListener("mouseleave", handleMouseLeave);
       return () => {
-        container.removeEventListener('mouseenter', handleMouseEnter);
-        container.removeEventListener('mouseleave', handleMouseLeave);
+        container.removeEventListener("mouseenter", handleMouseEnter);
+        container.removeEventListener("mouseleave", handleMouseLeave);
       };
     }
   }, [pauseOnHover]);
@@ -137,7 +147,7 @@ export default function Carousel({
     if (pauseOnHover && isHovered) return undefined;
 
     const timer = setInterval(() => {
-      setPosition(prev => Math.min(prev + 1, itemsForRender.length - 1));
+      setPosition((prev) => Math.min(prev + 1, itemsForRender.length - 1));
     }, autoplayDelay);
 
     return () => clearInterval(timer);
@@ -206,7 +216,7 @@ export default function Carousel({
 
     if (direction === 0) return;
 
-    setPosition(prev => {
+    setPosition((prev) => {
       const next = prev + direction;
       const max = itemsForRender.length - 1;
       return Math.max(0, Math.min(next, max));
@@ -218,34 +228,40 @@ export default function Carousel({
     : {
         dragConstraints: {
           left: -trackItemOffset * Math.max(itemsForRender.length - 1, 0),
-          right: 0
-        }
+          right: 0,
+        },
       };
 
   const activeIndex =
-    items.length === 0 ? 0 : loop ? (position - 1 + items.length) % items.length : Math.min(position, items.length - 1);
+    items.length === 0
+      ? 0
+      : loop
+        ? (position - 1 + items.length) % items.length
+        : Math.min(position, items.length - 1);
 
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden p-4 ${
-        round ? 'rounded-full border border-white' : 'rounded-[24px] border border-[#fff]'
+      className={`relative overflow-hidden p-4 shadow-[inset_0_5px_10px_rgba(0,0,0,0.5)] ${
+        round
+          ? "rounded-full border border-white"
+          : "rounded-[24px] border border-[#fff]"
       }`}
       style={{
         width: `${baseWidth}px`,
-        ...(round && { height: `${baseWidth}px` })
+        ...(round && { height: `${baseWidth}px` }),
       }}
     >
       <motion.div
-        className="flex"
-        drag={isAnimating ? false : 'x'}
+        className="flex "
+        drag={isAnimating ? false : "x"}
         {...dragProps}
         style={{
           width: itemWidth,
           gap: `${GAP}px`,
           perspective: 1000,
           perspectiveOrigin: `${position * trackItemOffset + itemWidth / 2}px 50%`,
-          x
+          x,
         }}
         onDragEnd={handleDragEnd}
         animate={{ x: -(position * trackItemOffset) }}
@@ -262,7 +278,7 @@ export default function Carousel({
             round={round}
             trackItemOffset={trackItemOffset}
             x={x}
-            transition={effectiveTransition}            
+            transition={effectiveTransition}
           />
         ))}
       </motion.div>
@@ -292,4 +308,3 @@ export default function Carousel({
     </div>
   );
 }
-
