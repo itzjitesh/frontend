@@ -11,6 +11,8 @@
         "@stripe/stripe-js": "^8.6.3",
         "@vitejs/plugin-react": "^5.1.2",
         "axios": "^1.13.2",
+        "gsap": "^3.14.2",
+        "motion": "^12.34.0",
         "react": "^19.2.3",
         "react-dom": "^19.2.3",
         "react-router-dom": "^7.12.0"
