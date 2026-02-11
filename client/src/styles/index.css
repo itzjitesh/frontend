@@ -101,6 +101,13 @@
     }
 }
 
+@media screen and (max-width:768px) {
+    .page-center {
+        padding: 24px 16px;
+    }
+
+}
+
 
 /* UTILITY styles (this is for text and other small elements) */
 @layer utilities {
@@ -193,6 +200,13 @@
         transform: rotate(360deg);
     }
 }
+
+@media screen and (max-width:768px) {
+    .btn {
+        padding: 5px 10px;
+    }
+}
+
 
 
 /* Card-btn css here -*****************/

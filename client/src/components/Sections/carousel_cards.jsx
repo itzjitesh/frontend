@@ -65,7 +65,7 @@ function CarouselItem({
       className={`relative shrink-0 flex flex-col ${
         round
           ? "items-center justify-center text-center bg-[#060010] border-0"
-          : "items-start justify-between bg-[#222] border border-[#fff] rounded-[12px]"
+          : "items-start justify-between bg-[#222]  rounded-[12px] shadow-[5px_10px_50px_rgba(0,0,0,0.7),_-5px_0px_250px_rgba(0,0,0,0.7)] bg-gradient-to-r from-[rgb(20,30,48)] to-[rgb(36,59,85)]"
       } overflow-hidden cursor-grab active:cursor-grabbing`}
       style={{
         width: itemWidth,
@@ -75,7 +75,7 @@ function CarouselItem({
       }}
       transition={transition}
     >
-      <div className={`${round ? "p-0 m-0" : "mb-4 p-5"}`}>
+      <div className={`${round ? "p-0 m-0" : "mb-4 p-5"} max-md:hidden`}>
         <span className="flex h-[28px] w-[28px] items-center justify-center rounded-full bg-[#060010]">
           {item.icon}
         </span>
@@ -242,7 +242,7 @@ export default function Carousel({
   return (
     <div
       ref={containerRef}
-      className={`relative overflow-hidden p-4 shadow-[inset_0_5px_10px_rgba(0,0,0,0.5)] ${
+      className={`relative overflow-hidden p-4 shadow-[inset_0_5px_10px_rgba(0,0,0,0.5)] max-md:h-[250px] ${
         round
           ? "rounded-full border border-white"
           : "rounded-[24px] border border-[#fff]"
@@ -253,7 +253,7 @@ export default function Carousel({
       }}
     >
       <motion.div
-        className="flex "
+        className="flex max-md:h-230px "
         drag={isAnimating ? false : "x"}
         {...dragProps}
         style={{

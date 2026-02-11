@@ -4,7 +4,7 @@ export default function Footer() {
       <div className="page-center">
         <div className="ftr-cont text-white flex justify-between items-center">
           <span>© {new Date().getFullYear()} ValueLens</span>{" "}
-          <span>Campaign ROI & Business Value Calculators</span>
+          <span>Business Value Calculators</span>
         </div>
       </div>
     </footer>
